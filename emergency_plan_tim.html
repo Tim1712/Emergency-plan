@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emergency Assistance Plan</title>
+  <style>
+    :root {
+      --navy: #0f2740;
+      --blue: #1c5d99;
+      --red: #e53935;
+      --red-dark: #c62828;
+      --green: #2e8b57;
+      --orange: #f39c12;
+      --teal: #1a8c8c;
+      --text: #1d2a33;
+      --muted: #5f7382;
+      --border: #d6e1ea;
+      --soft-red: #fff5f5;
+      --soft-green: #f2fbf7;
+      --soft-blue: #f4f8fc;
+      --soft-gray: #f8fbfd;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #e9eef3;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+    }
+
+    body {
+      line-height: 1.25;
+    }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: rgba(233, 238, 243, 0.96);
+      border-bottom: 1px solid #d7e0e8;
+    }
+
+    .toolbar button {
+      border: none;
+      border-radius: 10px;
+      padding: 10px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--navy);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--navy);
+      border: 1px solid #d3dde7;
+    }
+
+    .sheet {
+      width: 210mm;
+      margin: 12px auto;
+      background: white;
+      box-shadow: 0 16px 34px rgba(0,0,0,0.12);
+    }
+
+    .page {
+      width: 100%;
+      min-height: 297mm;
+      padding: 6mm;
+      position: relative;
+    }
+
+    .page + .page {
+      border-top: 2px dashed #dde6ee;
+    }
+
+    .hero-row {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #102b45, #1c5d99);
+      color: white;
+      border-radius: 14px;
+      padding: 12px 14px;
+    }
+
+    .hero h1 {
+      margin: 0 0 4px;
+      font-size: 22px;
+      line-height: 1.02;
+    }
+
+    .hero p {
+      margin: 0;
+      font-size: 9.6px;
+      line-height: 1.28;
+      color: rgba(255,255,255,0.92);
+    }
+
+    .sample {
+      background: var(--soft-gray);
+      border: 1.2px solid var(--border);
+      border-radius: 14px;
+      padding: 9px 10px;
+    }
+
+    .sample h3 {
+      margin: 0 0 6px;
+      font-size: 12px;
+      color: var(--navy);
+    }
+
+    .sample-grid {
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      gap: 2px 5px;
+      font-size: 9.4px;
+      line-height: 1.18;
+    }
+
+    .sample-grid strong {
+      color: var(--blue);
+    }
+
+    .numbers {
+      background: linear-gradient(180deg, #ff2424, #e03131);
+      color: white;
+      border-radius: 14px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+    }
+
+    .numbers h2 {
+      margin: 0 0 7px;
+      text-align: center;
+      font-size: 17px;
+      line-height: 1.05;
+    }
+
+    .numbers-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px 10px;
+    }
+
+    .numbers-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 10px;
+      padding: 8px 9px;
+    }
+
+    .numbers-card.full {
+      grid-column: 1 / -1;
+      text-align: center;
+    }
+
+    .numbers-card h3 {
+      margin: 0 0 5px;
+      font-size: 10px;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+
+    .contact {
+      margin-bottom: 6px;
+      line-height: 1.18;
+    }
+
+    .contact:last-child {
+      margin-bottom: 0;
+    }
+
+    .contact .name {
+      display: block;
+      font-size: 10.3px;
+    }
+
+    .contact .phone {
+      display: block;
+      font-size: 11.6px;
+      font-weight: 800;
+      margin-top: 1px;
+    }
+
+    .title {
+      margin: 0 0 3px;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--navy);
+    }
+
+    .subtitle {
+      margin: 0 0 6px;
+      font-size: 9.6px;
+      color: var(--muted);
+      line-height: 1.24;
+    }
+
+    .quick-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .step {
+      background: var(--soft-blue);
+      border: 1.2px solid var(--border);
+      border-radius: 10px;
+      padding: 6px;
+      text-align: center;
+    }
+
+    .step .num {
+      width: 21px;
+      height: 21px;
+      margin: 0 auto 4px;
+      border-radius: 999px;
+      background: var(--navy);
+      color: white;
+      font-size: 10px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .step p {
+      margin: 0;
+      font-size: 8.9px;
+      line-height: 1.18;
+      font-weight: 700;
+    }
+
+    .response-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .card {
+      border: 1.2px solid var(--border);
+      border-radius: 12px;
+      padding: 8px;
+      background: white;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 8px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      border-radius: 999px;
+      padding: 3px 6px;
+      margin-bottom: 5px;
+    }
+
+    .badge.red { background: #fde9e8; color: var(--red-dark); }
+    .badge.blue { background: #e8f1fb; color: var(--blue); }
+    .badge.orange { background: #fff1df; color: #b56a00; }
+    .badge.green { background: #e9f7ef; color: var(--green); }
+    .badge.teal { background: #e8f7f7; color: var(--teal); }
+
+    .card h3 {
+      margin: 0 0 3px;
+      font-size: 13px;
+      color: var(--navy);
+    }
+
+    .card p.desc {
+      margin: 0 0 6px;
+      font-size: 9.2px;
+      color: var(--muted);
+      line-height: 1.18;
+    }
+
+    .stack-box {
+      border-radius: 10px;
+      padding: 6px 8px;
+    }
+
+    .symptoms-box {
+      background: var(--soft-red);
+      border: 1px solid #ffd5d3;
+    }
+
+    .action-box {
+      background: var(--soft-green);
+      border: 1px solid #cfeadf;
+    }
+
+    .stack-box h4 {
+      margin: 0 0 4px;
+      font-size: 9.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.28px;
+    }
+
+    .symptoms-box h4 {
+      color: var(--red-dark);
+    }
+
+    .action-box h4 {
+      color: var(--green);
+    }
+
+    .arrow-down, .arrow-right {
+      text-align: center;
+      font-weight: 900;
+      color: var(--blue);
+      line-height: 1;
+    }
+
+    .arrow-down {
+      font-size: 18px;
+      margin: 2px 0;
+    }
+
+    .arrow-right {
+      font-size: 20px;
+    }
+
+    .dci {
+      border: 1.2px solid var(--border);
+      border-radius: 14px;
+      background: linear-gradient(180deg, #fbfdff, #f4f8fb);
+      padding: 8px;
+      margin-bottom: 6px;
+    }
+
+    .dci-header {
+      display: grid;
+      grid-template-columns: 1fr 150px;
+      gap: 8px;
+      align-items: start;
+      margin-bottom: 6px;
+    }
+
+    .dci h2 {
+      margin: 0 0 3px;
+      font-size: 14px;
+      color: var(--navy);
+    }
+
+    .dci-header p {
+      margin: 0;
+      font-size: 8.9px;
+      color: var(--muted);
+      line-height: 1.16;
+    }
+
+    .alert-box {
+      background: #fff4f4;
+      color: var(--red-dark);
+      border: 1px solid #ffd0ce;
+      border-radius: 10px;
+      padding: 6px 7px;
+      font-size: 8.4px;
+      line-height: 1.14;
+      font-weight: 700;
+    }
+
+    .dci-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+    }
+
+    .soft-box {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 6px 7px;
+    }
+
+    .soft-box h3 {
+      margin: 0 0 4px;
+      font-size: 9.2px;
+      color: var(--navy);
+      text-transform: uppercase;
+      letter-spacing: 0.22px;
+    }
+
+    .columns-2 {
+      columns: 2;
+      column-gap: 10px;
+      padding-left: 13px;
+      margin: 0;
+    }
+
+    .columns-2 li {
+      break-inside: avoid;
+    }
+
+    .emphasis {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+
+    .emphasis .item {
+      background: #eef6fb;
+      border: 1px solid #d4e3ef;
+      border-radius: 10px;
+      padding: 6px;
+      text-align: center;
+    }
+
+    .emphasis .item strong {
+      display: block;
+      font-size: 9.2px;
+      color: var(--navy);
+      margin-bottom: 2px;
+    }
+
+    .emphasis .item span {
+      display: block;
+      font-size: 8.3px;
+      color: var(--muted);
+      line-height: 1.12;
+    }
+
+    .cases {
+      display: grid;
+      gap: 7px;
+      margin-bottom: 8px;
+    }
+
+    .case-row {
+      border: 1.2px solid var(--border);
+      border-radius: 12px;
+      padding: 8px;
+      background: white;
+    }
+
+    .case-row h3 {
+      margin: 0 0 2px;
+      font-size: 12px;
+      color: var(--navy);
+    }
+
+    .case-row .case-desc {
+      margin: 0 0 5px;
+      font-size: 8.8px;
+      color: var(--muted);
+      line-height: 1.14;
+    }
+
+    .case-flow {
+      display: grid;
+      grid-template-columns: 0.88fr 22px 1.12fr;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .minor-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
+      margin-bottom: 8px;
+    }
+
+    .minor-card {
+      border: 1.2px solid var(--border);
+      border-radius: 12px;
+      padding: 8px;
+      background: white;
+    }
+
+    .minor-card h3 {
+      margin: 0 0 4px;
+      font-size: 11.3px;
+      color: var(--navy);
+    }
+
+    .missing {
+      border: 1.2px solid var(--border);
+      border-radius: 12px;
+      padding: 8px 9px;
+      background: linear-gradient(180deg, #f9fcff, #f3f8fc);
+      margin-bottom: 6px;
+    }
+
+    .missing ol {
+      margin: 0;
+      padding-left: 16px;
+    }
+
+    .footer-note {
+      font-size: 8.3px;
+      color: var(--muted);
+      text-align: right;
+    }
+
+    ul, ol {
+      margin: 0;
+    }
+
+    li {
+      font-size: 8.6px;
+      line-height: 1.12;
+      margin-bottom: 2px;
+    }
+
+    strong.inline {
+      color: var(--navy);
+    }
+
+    @page {
+      size: A4;
+      margin: 6mm;
+    }
+
+    @media print {
+      html, body {
+        background: white;
+        margin: 0;
+        padding: 0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .toolbar {
+        display: none !important;
+      }
+
+      .sheet {
+        width: 100%;
+        margin: 0;
+        box-shadow: none;
+      }
+
+      .page {
+        min-height: auto;
+        padding: 0;
+        break-after: page;
+        page-break-after: always;
+      }
+
+      .page:last-child {
+        break-after: auto;
+        page-break-after: auto;
+      }
+
+      .page + .page {
+        border-top: none;
+      }
+
+      .hero,
+      .sample,
+      .numbers,
+      .card,
+      .dci,
+      .soft-box,
+      .case-row,
+      .minor-card,
+      .missing {
+        box-shadow: none !important;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <button class="btn-primary" onclick="window.print()">Download / Save as PDF</button>
+    <button class="btn-secondary" onclick="window.print()">Print</button>
+  </div>
+
+  <div class="sheet">
+    <!-- PAGE 1 -->
+    <section class="page">
+      <div class="hero-row">
+        <div class="hero">
+          <h1>Emergency Assistance Plan</h1>
+          <p>
+            Quick-reference guide for diving incidents, decompression illness,
+            heat-related illness, minor injuries, and missing diver response.
+            Built for fast scanning: <strong>symptoms first, action second</strong>.
+          </p>
+        </div>
+
+        <div class="sample">
+          <h3>SAMPLE Assessment</h3>
+          <div class="sample-grid">
+            <strong>S</strong><div>Signs &amp; Symptoms</div>
+            <strong>A</strong><div>Allergies</div>
+            <strong>M</strong><div>Medications</div>
+            <strong>P</strong><div>Pre-existing Medical Conditions</div>
+            <strong>L</strong><div>Last Meal</div>
+            <strong>E</strong><div>Events</div>
+          </div>
+        </div>
+      </div>
+
+      <section class="numbers">
+        <h2>Important Numbers</h2>
+        <div class="numbers-grid">
+          <div class="numbers-card">
+            <h3>Clinic Koh Lipe</h3>
+            <div class="contact">
+              <span class="name">Andaman International Clinic</span>
+              <span class="phone">+66 88 668 4222</span>
+            </div>
+            <div class="contact">
+              <span class="name">Siam International Clinic Koh Lipe</span>
+              <span class="phone">+66 95 256 1828</span>
+            </div>
+          </div>
+
+          <div class="numbers-card">
+            <h3>Nearest Mainland Hospitals</h3>
+            <div class="contact">
+              <span class="name">Satun Hospital</span>
+              <span class="phone">074 723 500</span>
+            </div>
+            <div class="contact">
+              <span class="name">Hatyai Hospital</span>
+              <span class="phone">074 273 100</span>
+            </div>
+          </div>
+
+          <div class="numbers-card full">
+            <h3>Recompression Chamber</h3>
+            <div class="contact">
+              <span class="name">SSS Hyperbaric Chamber (Phuket)</span>
+              <span class="phone">+66 810 819 000</span>
+            </div>
+          </div>
+
+          <div class="numbers-card full">
+            <h3>Emergency Contacts</h3>
+            <div class="contact">
+              <span class="name">Emergency Medical Services EMS</span>
+              <span class="phone">1669</span>
+            </div>
+            <div class="contact">
+              <span class="name">DAN Emergency Hotline</span>
+              <span class="phone">+1-919-684-9111</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <h2 class="title">Immediate Diver Response</h2>
+      <p class="subtitle">First stabilize the diver, then collect information.</p>
+
+      <div class="quick-steps">
+        <div class="step">
+          <div class="num">1</div>
+          <p>Check responsiveness and breathing</p>
+        </div>
+        <div class="step">
+          <div class="num">2</div>
+          <p>Start AB-CABs if required</p>
+        </div>
+        <div class="step">
+          <div class="num">3</div>
+          <p>Give oxygen early</p>
+        </div>
+        <div class="step">
+          <div class="num">4</div>
+          <p>Call EMS / DAN / chamber support</p>
+        </div>
+      </div>
+
+      <div class="response-grid">
+        <div class="card">
+          <span class="badge red">Case 1</span>
+          <h3>Unresponsive Diver</h3>
+          <p class="desc">No response, abnormal breathing, collapse, or suspected cardiac emergency.</p>
+
+          <div class="stack-box symptoms-box">
+            <h4>Symptoms / Situation</h4>
+            <ul>
+              <li>Not responding</li>
+              <li>May not be breathing normally</li>
+              <li>Possible collapse after dive</li>
+              <li>Possible cardiac arrest</li>
+            </ul>
+          </div>
+
+          <div class="arrow-down">↓</div>
+
+          <div class="stack-box action-box">
+            <h4>Immediate Action</h4>
+            <ul>
+              <li>Maintain <strong class="inline">AB-CABs</strong></li>
+              <li>Provide rescue breathing if needed</li>
+              <li>Start CPR if necessary</li>
+              <li>Activate EMS immediately</li>
+              <li>Prepare for evacuation</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <span class="badge blue">Case 2</span>
+          <h3>Responsive Diver</h3>
+          <p class="desc">Awake but showing possible dive-related symptoms.</p>
+
+          <div class="stack-box symptoms-box">
+            <h4>Symptoms / Situation</h4>
+            <ul>
+              <li>Awake and responsive</li>
+              <li>Pain, dizziness, fatigue, or breathing trouble</li>
+              <li>Possible DCI / barotrauma signs</li>
+            </ul>
+          </div>
+
+          <div class="arrow-down">↓</div>
+
+          <div class="stack-box action-box">
+            <h4>Immediate Action</h4>
+            <ul>
+              <li>Encourage diver to lie down and relax</li>
+              <li>Give <strong class="inline">100% oxygen</strong></li>
+              <li>Protect from excess heat or cold</li>
+              <li>If oxygen is limited, give the highest concentration possible as long as it lasts</li>
+              <li>If oxygen is empty but enriched air nitrox is available, you may give that</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <section class="dci">
+        <div class="dci-header">
+          <div>
+            <h2>Decompression Illness (DCI)</h2>
+            <p>
+              Treat suspicious symptoms seriously. Give oxygen early, keep the diver at rest,
+              and collect clear information for medical professionals.
+            </p>
+          </div>
+          <div class="alert-box">
+            Suspected DCI?<br>
+            Give oxygen → monitor continuously → call EMS / DAN / chamber support.
+          </div>
+        </div>
+
+        <div class="dci-grid">
+          <div class="soft-box">
+            <h3>Possible Symptoms</h3>
+            <ul class="columns-2">
+              <li>Pain in joints</li>
+              <li>Fatigue</li>
+              <li>Extreme fatigue</li>
+              <li>Dizziness</li>
+              <li>Paralysis</li>
+              <li>Unconsciousness</li>
+              <li>Cardiac arrest</li>
+              <li>Nausea</li>
+              <li>Blurred vision</li>
+              <li>Vertigo</li>
+              <li>Loss of sensation</li>
+              <li>Coughing</li>
+            </ul>
+          </div>
+
+          <div class="soft-box">
+            <h3>Ask The Diver</h3>
+            <ul class="columns-2">
+              <li>Diving today / compressed air?</li>
+              <li>Forced or rapid ascent?</li>
+              <li>Maximum depth?</li>
+              <li>Bottom time?</li>
+              <li>Excessively tired?</li>
+              <li>Where does it hurt?</li>
+              <li>Dizzy?</li>
+              <li>Any numbness or tingling?</li>
+              <li>Trouble breathing?</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <div class="emphasis">
+        <div class="item">
+          <strong>Oxygen Early</strong>
+          <span>Give oxygen as soon as DCI is suspected.</span>
+        </div>
+        <div class="item">
+          <strong>Keep Still</strong>
+          <span>Lie the diver down and reduce unnecessary movement.</span>
+        </div>
+        <div class="item">
+          <strong>Escalate Fast</strong>
+          <span>Call EMS, DAN, and chamber support when needed.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 2 -->
+    <section class="page">
+      <h2 class="title">Common First Aid Cases</h2>
+      <p class="subtitle">Symptoms on the left, action on the right.</p>
+
+      <div class="cases">
+        <div class="case-row">
+          <span class="badge red">Heat Emergency</span>
+          <h3>Heat Stroke</h3>
+          <p class="case-desc">Serious, life-threatening overheating. Treat immediately.</p>
+
+          <div class="case-flow">
+            <div class="stack-box symptoms-box">
+              <h4>Symptoms</h4>
+              <ul>
+                <li>Hot, dry, flushed skin</li>
+                <li>Rapid pulse</li>
+                <li>Disoriented, confused, or unconscious</li>
+                <li><strong class="inline">Life-threatening</strong></li>
+              </ul>
+            </div>
+
+            <div class="arrow-right">→</div>
+
+            <div class="stack-box action-box">
+              <h4>What To Do</h4>
+              <ul>
+                <li>Perform a primary assessment</li>
+                <li>Monitor patient using the Cycle of Care</li>
+                <li>Move patient to a cool, shady area</li>
+                <li>Immediately cool by spraying or sponging with cool water</li>
+                <li>Cover with wet clothes and monitor until EMS arrives</li>
+                <li>Replace wet clothes with dry ones when temperature returns to normal</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="case-row">
+          <span class="badge orange">Heat Emergency</span>
+          <h3>Heat Exhaustion</h3>
+          <p class="case-desc">Cooling and rehydration are key. Watch for deterioration.</p>
+
+          <div class="case-flow">
+            <div class="stack-box symptoms-box">
+              <h4>Symptoms</h4>
+              <ul>
+                <li>Cool and clammy skin</li>
+                <li>Weak pulse</li>
+                <li>Nausea</li>
+                <li>Dizziness</li>
+                <li>Weakness and anxiety</li>
+              </ul>
+            </div>
+
+            <div class="arrow-right">→</div>
+
+            <div class="stack-box action-box">
+              <h4>What To Do</h4>
+              <ul>
+                <li>Move patient to a cool location</li>
+                <li>Lay patient down and elevate legs</li>
+                <li>Provide cool water or electrolyte drink every few minutes</li>
+                <li>Cool by misting with water and fanning</li>
+                <li>Continue support until fully cooled</li>
+                <li>If not calling EMS, encourage patient to see a doctor</li>
+                <li>If condition deteriorates, place in recovery position and activate EMS</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="title">Minor Injuries</h2>
+
+      <div class="minor-grid">
+        <div class="minor-card">
+          <span class="badge teal">Minor Injury</span>
+          <h3>Cuts</h3>
+          <div class="stack-box symptoms-box">
+            <h4>Symptoms</h4>
+            <ul>
+              <li>Open wound</li>
+              <li>Bleeding</li>
+              <li>Dirt or particles in wound</li>
+            </ul>
+          </div>
+          <div class="arrow-down">↓</div>
+          <div class="stack-box action-box">
+            <h4>What To Do</h4>
+            <ul>
+              <li>Control bleeding with direct pressure</li>
+              <li>Wash wound with water</li>
+              <li>Cover with non-adhesive dressing and bandage securely</li>
+              <li>Check daily for signs of infection</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="minor-card">
+          <span class="badge blue">Minor Injury</span>
+          <h3>Bruises</h3>
+          <div class="stack-box symptoms-box">
+            <h4>Symptoms</h4>
+            <ul>
+              <li>Painful impact area</li>
+              <li>Swelling / discoloration</li>
+              <li>Tenderness</li>
+            </ul>
+          </div>
+          <div class="arrow-down">↓</div>
+          <div class="stack-box action-box">
+            <h4>What To Do</h4>
+            <ul>
+              <li>Apply cold compress as soon as possible</li>
+              <li>Elevate the affected area if possible</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="minor-card">
+          <span class="badge green">Minor Injury</span>
+          <h3>Stings</h3>
+          <div class="stack-box symptoms-box">
+            <h4>Symptoms</h4>
+            <ul>
+              <li>Pain / burning</li>
+              <li>Visible sting or affected skin area</li>
+              <li>Localized irritation</li>
+            </ul>
+          </div>
+          <div class="arrow-down">↓</div>
+          <div class="stack-box action-box">
+            <h4>What To Do</h4>
+            <ul>
+              <li>Remove stings</li>
+              <li>Treat with hot water immersion when possible</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="title">Missing Diver Procedure</h2>
+      <div class="missing">
+        <ol>
+          <li>Have someone call for emergency help while you find out where anyone last saw the missing diver.</li>
+          <li>Assign spotters to look for bubbles and direct rescuers to the area.</li>
+          <li>Try to determine if the missing diver may have left without telling anyone.</li>
+          <li>Look for the diver’s clothes, gear bag, and other identifiable items.</li>
+          <li>Immediately assign qualified divers to head to the area where the diver was last seen and begin an underwater search.</li>
+          <li>Assign two skin divers to mark the search area with buoys.</li>
+        </ol>
+      </div>
+
+      <div class="emphasis">
+        <div class="item">
+          <strong>Recognize Fast</strong>
+          <span>Spot symptoms early and stay calm.</span>
+        </div>
+        <div class="item">
+          <strong>Match Response</strong>
+          <span>Choose the correct action for the condition.</span>
+        </div>
+        <div class="item">
+          <strong>Escalate Early</strong>
+          <span>If severe or worsening, call for emergency support.</span>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
