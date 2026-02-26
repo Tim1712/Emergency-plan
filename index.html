@@ -342,50 +342,49 @@
     }
 
     .dci {
-      border: 1.2px solid var(--border);
-      border-radius: 14px;
-      background: linear-gradient(180deg, #fbfdff, #f4f8fb);
-      padding: 8px;
-      margin-bottom: 6px;
-    }
+  border: 1.2px solid var(--border);
+  border-radius: 14px;
+  background: linear-gradient(180deg, #fbfdff, #f4f8fb);
+  padding: 8px;
+  margin-bottom: 6px;
+}
 
-    .dci-header {
-      display: grid;
-      grid-template-columns: 1fr 150px;
-      gap: 8px;
-      align-items: start;
-      margin-bottom: 6px;
-    }
+.dci-header {
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 6px;
+}
 
-    .dci h2 {
-      margin: 0 0 3px;
-      font-size: 14px;
-      color: var(--navy);
-    }
+.dci h2 {
+  margin: 0;
+  font-size: 14px;
+  color: var(--navy);
+}
 
-    .dci-header p {
-      margin: 0;
-      font-size: 8.9px;
-      color: var(--muted);
-      line-height: 1.16;
-    }
+.alert-box {
+  background: #fff4f4;
+  color: var(--red-dark);
+  border: 1px solid #ffd0ce;
+  border-radius: 10px;
+  padding: 7px 9px;
+  font-size: 8.8px;
+  line-height: 1.2;
+  font-weight: 700;
+  text-align: left;
+}
 
-    .alert-box {
-      background: #fff4f4;
-      color: var(--red-dark);
-      border: 1px solid #ffd0ce;
-      border-radius: 10px;
-      padding: 6px 7px;
-      font-size: 8.4px;
-      line-height: 1.14;
-      font-weight: 700;
-    }
+.alert-box strong {
+  display: inline-block;
+  margin-bottom: 2px;
+}
 
-    .dci-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 7px;
-    }
+.dci-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+}
 
     .soft-box {
       background: white;
@@ -595,11 +594,6 @@
       <div class="hero-row">
         <div class="hero">
           <h1>Emergency Assistance Plan</h1>
-          <p>
-            Quick-reference guide for diving incidents, decompression illness,
-            heat-related illness, minor injuries, and missing diver response.
-            Built for fast scanning: <strong>symptoms first, action second</strong>.
-          </p>
         </div>
 
         <div class="sample">
@@ -690,7 +684,6 @@
         <div class="card">
           <span class="badge red">Case 1</span>
           <h3>Unresponsive Diver</h3>
-          <p class="desc">No response, abnormal breathing, collapse, or suspected cardiac emergency.</p>
 
           <div class="stack-box symptoms-box">
             <h4>Symptoms / Situation</h4>
@@ -719,7 +712,6 @@
         <div class="card">
           <span class="badge blue">Case 2</span>
           <h3>Responsive Diver</h3>
-          <p class="desc">Awake but showing possible dive-related symptoms.</p>
 
           <div class="stack-box symptoms-box">
             <h4>Symptoms / Situation</h4>
@@ -746,55 +738,51 @@
       </div>
 
       <section class="dci">
-        <div class="dci-header">
-          <div>
-            <h2>Decompression Illness (DCI)</h2>
-            <p>
-              Treat suspicious symptoms seriously. Give oxygen early, keep the diver at rest,
-              and collect clear information for medical professionals.
-            </p>
-          </div>
-          <div class="alert-box">
-            Suspected DCI?<br>
-            Give oxygen → monitor continuously → call EMS / DAN / chamber support.
-          </div>
-        </div>
+  <div class="dci-header">
+    <div>
+      <h2>Decompression Illness (DCI)</h2>
+    </div>
+    <div class="alert-box">
+      <strong>Suspected DCI?</strong><br>
+      Give oxygen → monitor continuously → call EMS / DAN / chamber support.
+    </div>
+  </div>
 
-        <div class="dci-grid">
-          <div class="soft-box">
-            <h3>Possible Symptoms</h3>
-            <ul class="columns-2">
-              <li>Pain in joints</li>
-              <li>Fatigue</li>
-              <li>Extreme fatigue</li>
-              <li>Dizziness</li>
-              <li>Paralysis</li>
-              <li>Unconsciousness</li>
-              <li>Cardiac arrest</li>
-              <li>Nausea</li>
-              <li>Blurred vision</li>
-              <li>Vertigo</li>
-              <li>Loss of sensation</li>
-              <li>Coughing</li>
-            </ul>
-          </div>
+  <div class="dci-grid">
+    <div class="soft-box">
+      <h3>Possible Symptoms</h3>
+      <ul class="columns-2">
+        <li>Pain in joints</li>
+        <li>Fatigue</li>
+        <li>Extreme fatigue</li>
+        <li>Dizziness</li>
+        <li>Paralysis</li>
+        <li>Unconsciousness</li>
+        <li>Cardiac arrest</li>
+        <li>Nausea</li>
+        <li>Blurred vision</li>
+        <li>Vertigo</li>
+        <li>Loss of sensation</li>
+        <li>Coughing</li>
+      </ul>
+    </div>
 
-          <div class="soft-box">
-            <h3>Ask The Diver</h3>
-            <ul class="columns-2">
-              <li>Diving today / compressed air?</li>
-              <li>Forced or rapid ascent?</li>
-              <li>Maximum depth?</li>
-              <li>Bottom time?</li>
-              <li>Excessively tired?</li>
-              <li>Where does it hurt?</li>
-              <li>Dizzy?</li>
-              <li>Any numbness or tingling?</li>
-              <li>Trouble breathing?</li>
-            </ul>
-          </div>
-        </div>
-      </section>
+    <div class="soft-box">
+      <h3>Ask The Diver</h3>
+      <ul class="columns-2">
+        <li>Diving today / compressed air?</li>
+        <li>Forced or rapid ascent?</li>
+        <li>Maximum depth?</li>
+        <li>Bottom time?</li>
+        <li>Excessively tired?</li>
+        <li>Where does it hurt?</li>
+        <li>Dizzy?</li>
+        <li>Any numbness or tingling?</li>
+        <li>Trouble breathing?</li>
+      </ul>
+    </div>
+  </div>
+</section>
 
       <div class="emphasis">
         <div class="item">
@@ -815,8 +803,6 @@
     <!-- PAGE 2 -->
     <section class="page">
       <h2 class="title">Common First Aid Cases</h2>
-      <p class="subtitle">Symptoms on the left, action on the right.</p>
-
       <div class="cases">
         <div class="case-row">
           <span class="badge red">Heat Emergency</span>
